@@ -1,0 +1,5 @@
+.idea/
+Images/Canny
+env/
+venv/
+filtered_disparity_matrix
