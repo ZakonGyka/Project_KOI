@@ -40,8 +40,12 @@ class StereoCalibration(object):
             gray_r = cv2.cvtColor(img_r, cv2.COLOR_BGR2GRAY)
 
             # Find the chess board corners
-            ret_l, corners_l = cv2.findChessboardCorners(gray_l, (25, 17), None)
-            ret_r, corners_r = cv2.findChessboardCorners(gray_r, (25, 17), None)
+            ret_l, corners_l = cv2.findChessboardCorners(
+                gray_l, (25, 17), None
+            )
+            ret_r, corners_r = cv2.findChessboardCorners(
+                gray_r, (25, 17), None
+            )
 
             # If found, add object points, image points (after refining them)
             self.objpoints.append(self.objp)
@@ -127,8 +131,8 @@ print('Intrinsic_mtx_2', cam_matrix_2)
 print('dist_2', dist_2)
 print('R', R)
 print('T', T)
-#print('E', E)
-#print('F', F)
+# print('E', E)
+# print('F', F)
 
 print('')
 print('stereoRectify')
@@ -213,13 +217,16 @@ _3dImage = cv2.reprojectImageTo3D(left_disp_filtered, Q)
 
 fig = plt.figure()
 ax = Axes3D(fig)
-ax.scatter(_3dImage[::70, ::70, 0], _3dImage[::70, ::70, 1], _3dImage[::70, ::70, 2])
+ax.scatter(_3dImage[::70, ::70, 0],
+           _3dImage[::70, ::70, 1],
+           _3dImage[::70, ::70, 2]
+           )
 plt.show()
 
-disparity_matix_array = np.asarray(left_disp_filtered)
-plt.imshow(disparity_matix_array)
+disparity_matrix_array = np.asarray(left_disp_filtered)
+plt.imshow(disparity_matrix_array)
 plt.show()
-# cv2.imshow("filtered_disparity", disparity_matix_array)
+# cv2.imshow("filtered_disparity", disparity_matrix_array)
 
 # u1 left cam (IMG0092)
 object_cam_points_cam_1 = np.array([[283, 775, 1283, 827, 280, 822, 1280],
@@ -254,65 +261,16 @@ for point in points4D.T:
     print('res_z = ', res_z)
 
 
-distance_length_up =  (((res_x[3] - res_x[2]) ** 2 + (res_y[3] - res_y[2]) ** 2 + (res_z[3] - res_z[2]) ** 2) ** 0.5)/1600
+distance_length_up = (((res_x[3] - res_x[2]) ** 2 + (res_y[3] - res_y[2])
+                       ** 2 + (res_z[3] - res_z[2]) ** 2) ** 0.5)/1600
 print('distance_length_up', distance_length_up)
 
-distance_height_left =  (((res_x[3] - res_x[5]) ** 2 + (res_y[3] - res_y[5]) ** 2 + (res_z[3] - res_z[5]) ** 2) ** 0.5)/1600
+distance_height_left = (((res_x[3] - res_x[5]) ** 2 + (res_y[3] - res_y[5])
+                         ** 2 + (res_z[3] - res_z[5]) ** 2) ** 0.5)/1600
 print('distance_height_left', distance_height_left)
 
-distance_width_up_left =  (((res_x[0] - res_x[3]) ** 2 + (res_y[0] - res_y[3]) ** 2 + (res_z[0] - res_z[3]) ** 2) ** 0.5)/1600
+distance_width_up_left = (((res_x[0] - res_x[3]) ** 2 + (res_y[0] - res_y[3])
+                           ** 2 + (res_z[0] - res_z[3]) ** 2) ** 0.5)/1600
 print('distance_width_up_left', distance_width_up_left)
 
 cv2.waitKey()
-#distance_length_far = (((res_x[0] - res_x[1]) ** 2 + (res_y[0] - res_y[1]) ** 2 + (res_z[0] - res_z[1]) ** 2) ** 0.5)/1600
-#print('distance_length_far', distance_length_far)
-
-
-
-#distance_length_down =  (((res_x[5] - res_x[6]) ** 2 + (res_y[5] - res_y[6]) ** 2 + (res_z[5] - res_z[6]) ** 2) ** 0.5)/1600
-#print('distance_length_down', distance_length_down)
-
-
-
-#distance_width_down_left =  (((res_x[4] - res_x[5]) ** 2 + (res_y[4] - res_y[5]) ** 2 + (res_z[4] - res_z[5]) ** 2) ** 0.5)/1600
-#print('distance_width_down_left', distance_width_down_left)
-
-#distance_width_right =  (((res_x[1] - res_x[2]) ** 2 + (res_y[1] - res_y[2]) ** 2 + (res_z[1] - res_z[2]) ** 2) ** 0.5)/1600
-#print('distance_width_right', distance_width_right)
-
-#distance_height_left_far =  (((res_x[0] - res_x[4]) ** 2 + (res_y[0] - res_y[4]) ** 2 + (res_z[0] - res_z[4]) ** 2) ** 0.5)/1600
-#print('distance_height_left_far', distance_height_left_far)
-
-
-
-#distance_height_right =  (((res_x[2] - res_x[6]) ** 2 + (res_y[2] - res_y[6]) ** 2 + (res_z[2] - res_z[6]) ** 2) ** 0.5)/1600
-#print('distance_height_right', distance_height_right)
-
-'''
-distance_length_far = ((res_x[0] - res_x[1]) ** 2 + (res_y[0] - res_y[1]) ** 2 + (res_z[0] - res_z[1]) ** 2) ** 0.5
-print('distance_length_far', distance_length_far)
-
-distance_length_up =  ((res_x[3] - res_x[2]) ** 2 + (res_y[3] - res_y[2]) ** 2 + (res_z[3] - res_z[2]) ** 2) ** 0.5
-print('distance_length_up', distance_length_up)
-
-distance_length_down =  ((res_x[5] - res_x[6]) ** 2 + (res_y[5] - res_y[6]) ** 2 + (res_z[5] - res_z[6]) ** 2) ** 0.5
-print('distance_length_down', distance_length_down)
-
-distance_width_up_left =  ((res_x[0] - res_x[3]) ** 2 + (res_y[0] - res_y[3]) ** 2 + (res_z[0] - res_z[3]) ** 2) ** 0.5
-print('distance_width_up_left', distance_width_up_left)
-
-distance_width_down_left =  ((res_x[4] - res_x[5]) ** 2 + (res_y[4] - res_y[5]) ** 2 + (res_z[4] - res_z[5]) ** 2) ** 0.5
-print('distance_width_down_left', distance_width_down_left)
-
-distance_width_right =  ((res_x[1] - res_x[2]) ** 2 + (res_y[1] - res_y[2]) ** 2 + (res_z[1] - res_z[2]) ** 2) ** 0.5
-print('distance_width_right', distance_width_right)
-
-distance_height_left_far =  ((res_x[0] - res_x[4]) ** 2 + (res_y[0] - res_y[4]) ** 2 + (res_z[0] - res_z[4]) ** 2) ** 0.5
-print('distance_height_left_far', distance_height_left_far)
-
-distance_height_left =  ((res_x[3] - res_x[5]) ** 2 + (res_y[3] - res_y[5]) ** 2 + (res_z[3] - res_z[5]) ** 2) ** 0.5
-print('distance_height_left', distance_height_left)
-
-distance_height_right =  ((res_x[2] - res_x[6]) ** 2 + (res_y[2] - res_y[6]) ** 2 + (res_z[2] - res_z[6]) ** 2) ** 0.5
-print('distance_height_right', distance_height_right)
-'''
